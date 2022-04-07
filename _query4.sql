@@ -2,7 +2,7 @@ Select nombre_corporativo, sum(stock) as "Stock Total"
 from producto, proveedor
 where fk_idproveedor = idproveedor  
 group by fk_idproveedor 
-order by "Stock Total"  ASC;
+order by sum(stock) ASC LIMIT 1;
 
 SELECT idproveedor FROM proveedor WHERE idproveedor = 
 (SELECT fk_idproveedor FROM producto WHERE stock = 68);

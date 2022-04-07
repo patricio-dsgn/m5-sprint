@@ -98,12 +98,12 @@ CREATE TABLE db1.producto (
 		 ('2', '32000', '1', 'Audio', 'Negro', '1', 'Microfono'),
  		 ('3', '85000', '3', 'Cocina', 'Blanco', '7', 'Microondas'),
 		 ('4', '18000', '3', 'Cocina', 'Rojo', '2', 'Hervidor'),
-		 ('5', '150000', '2', 'Audiovisual', 'Blanco', '8', 'Televisor'),
-		 ('6', '80000', '4', 'Computación', 'Blanco', '32', 'Mouse'),
+		 ('5', '150000', '2', 'Audiovisual', 'Blanco', '14', 'Televisor'),
+		 ('6', '80000', '4', 'Computación', 'Blanco', '10', 'Mouse'),
 		 ('7', '150000', '1', 'Audio', 'Azul', '2', 'Parlantes'),
-		 ('8', '25000', '4', 'Computación', 'Azul', '68', 'Teclado'),
+		 ('8', '25000', '4', 'Computación', 'Azul', '10', 'Teclado'),
 		 ('9', '89000', '5', 'Computación', 'Rojo', '14', 'Impresora'),
-		 ('10', '55000', '2', 'Audiovisual', 'Negro', '18', 'Soundbar');
+		 ('10', '55000', '2', 'Audiovisual', 'Negro', '20', 'Soundbar');
   
 
 
@@ -141,15 +141,27 @@ GROUP BY color
 ORDER BY count(color) DESC LIMIT 1)tabla_temp);
 
 
--- pendiente ---------------
+
 #4) Los proveedores con menor stock de productos
 
+# suma los stocks de cada proveedor
+# encuentra el numero menor
+# lo guarda en una variable
+SET @num = (SELECT min(Stock_Total) FROM
+(Select nombre_corporativo, sum(stock) as Stock_Total
+from producto, proveedor
+where fk_idproveedor = idproveedor  
+group by fk_idproveedor 
+order by sum(stock))tabla_temp2);
 
-
-
-
-
-
+# suma los stocks de cada proveedor
+# los compara con en numero menor ya buscado
+SELECT * FROM
+(Select nombre_corporativo, sum(stock) as "Stock_Total" 
+from producto, proveedor
+where fk_idproveedor = idproveedor  
+group by fk_idproveedor 
+order by sum(stock))tabla_temp2 WHERE Stock_Total = @num;
 
 
 
@@ -158,5 +170,13 @@ ORDER BY count(color) DESC LIMIT 1)tabla_temp);
 
 -- pendiente ----------------------
 # CAMBIO - - - - -
-# la categoría de productos más popular por ‘Electrónica y computación’
+# la categoría de productos más popular por 'Electrónica y computación'
+
+Select categoria, sum(stock) as "Stock Total" 
+from producto
+group by categoria 
+order by "Stock Total"  asc;
+
+
+
 
