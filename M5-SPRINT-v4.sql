@@ -188,11 +188,11 @@ Select @pop;
 
 
 
-SELECT MAX(xxx.Stock_Total ) FROM (Select sum(stock) as "Stock_Total" 
-from producto
-group by categoria 
-order by "Stock_Total" asc
+-- SELECT MAX(xxx.Stock_Total ) FROM (Select sum(stock) as "Stock_Total" 
+-- from producto
+-- group by categoria 
+-- order by "Stock_Total" asc
 
 
-UPDATE db1.producto SET categoria = "Electrónica y computación"
-WHERE (idProducto = "1014");
+-- UPDATE db1.producto SET categoria = "Electrónica y computación"
+-- WHERE (idProducto = "1014");
