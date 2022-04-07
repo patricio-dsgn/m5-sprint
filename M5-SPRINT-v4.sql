@@ -172,11 +172,14 @@ order by sum(stock))tabla_temp2 WHERE Stock_Total = @num;
 # CAMBIO - - - - -
 # la categoría de productos más popular por 'Electrónica y computación'
 
-Select categoria, sum(stock) as "Stock Total" 
+SET @pop = (SELECT MAX(xxx.Stock_Total ) FROM (Select sum(stock) as "Stock_Total" 
 from producto
 group by categoria 
-order by "Stock Total"  asc;
+order by "Stock_Total" asc)xxx);
+
+Select @pop;
 
 
 
-
+UPDATE db1.producto SET categoria = "Electrónica y computación"
+WHERE (idProducto = "1014");
